@@ -1,6 +1,6 @@
 # Unlink
 
-Consider the unlink code:
+Consider the `unlink` code:
 
 ```c
 void unlink(OBJ* P){
