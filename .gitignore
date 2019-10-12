@@ -1,3 +1,12 @@
 # VSCode
 *.vscode
 
+# Python
+*.pyc
+
+# IDA
+*.id*
+*.nam
+*.til
+*.idb
+*.i64
