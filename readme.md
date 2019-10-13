@@ -31,7 +31,7 @@ I solved some of the challanges before I started doing write ups. These are stil
 ## Rookiss
 
 * [ ] brain fuck
-* [ ] md5 calculator
+* [X] md5 calculator
 * [ ] simple login
 * [ ] otp
 * [ ] ascii_easy
