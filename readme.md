@@ -41,7 +41,7 @@ I solved some of the challanges before I started doing write ups. These are stil
 * [ ] fix
 * [ ] syscall
 * [ ] crypto1
-* [ ] echo1
+* [X] echo1
 * [ ] echo2
 * [ ] rsa calculator
 * [ ] note
