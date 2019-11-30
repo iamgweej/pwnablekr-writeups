@@ -39,7 +39,7 @@ I solved some of the challanges before I started doing write ups. These are stil
 * [ ] fsb
 * [ ] dragon
 * [ ] fix
-* [ ] syscall
+* [X] syscall
 * [ ] crypto1
 * [X] echo1
 * [ ] echo2
