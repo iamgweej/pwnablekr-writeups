@@ -32,16 +32,16 @@ I solved some of the challanges before I started doing write ups. These are stil
 
 * [ ] brain fuck
 * [X] md5 calculator
-* [ ] simple login
+* [X] simple login
 * [ ] otp
 * [ ] ascii_easy
 * [ ] tiny_easy
 * [ ] fsb
 * [ ] dragon
 * [ ] fix
-* [ ] syscall
+* [X] syscall
 * [ ] crypto1
-* [ ] echo1
+* [X] echo1
 * [ ] echo2
 * [ ] rsa calculator
 * [ ] note
