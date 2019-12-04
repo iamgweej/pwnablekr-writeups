@@ -30,13 +30,13 @@ I solved some of the challanges before I started doing write ups. These are stil
 
 ## Rookiss
 
-* [ ] brain fuck
+* [X] *brain fuck*
 * [X] md5 calculator
 * [X] simple login
-* [ ] otp
+* [X] *otp*
 * [ ] ascii_easy
 * [ ] tiny_easy
-* [ ] fsb
+* [X] fsb
 * [ ] dragon
 * [ ] fix
 * [X] syscall
