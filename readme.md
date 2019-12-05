@@ -37,7 +37,7 @@ I solved some of the challanges before I started doing write ups. These are stil
 * [ ] ascii_easy
 * [ ] tiny_easy
 * [X] fsb
-* [ ] dragon
+* [X] dragon
 * [ ] fix
 * [X] syscall
 * [ ] crypto1
