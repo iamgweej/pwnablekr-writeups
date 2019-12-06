@@ -4,6 +4,8 @@ My solutions for `pwnable.kr`, with what I had in mind attempting each challange
 
 I solved some of the challanges before I started doing write ups. These are still checked, but are styled like *this*.
 
+Credit is also due to the awesome [Itay Saadia](https://github.com/itaysaadia "Itay's GitHub"), who solved some of the challanges with me. Be sure to check him out!
+
 ## Toddler's Bottle
 
 * [X] *fd*
@@ -42,7 +44,7 @@ I solved some of the challanges before I started doing write ups. These are stil
 * [X] syscall
 * [ ] crypto1
 * [X] echo1
-* [ ] echo2
+* [X] echo2
 * [ ] rsa calculator
 * [ ] note
 * [ ] alloca
