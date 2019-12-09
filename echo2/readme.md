@@ -1,4 +1,4 @@
-# Echo 2
+# echo2
 
 First of all, we can guess that the global `o` is actually a struct:
 
