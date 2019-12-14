@@ -10,3 +10,6 @@
 *.til
 *.idb
 *.i64
+
+# Flags
+flags.md
