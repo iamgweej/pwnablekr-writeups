@@ -17,9 +17,9 @@ Credit is also due to the awesome [Itay Saadia](https://github.com/itaysaadia "I
 * [ ] input
 * [ ] leg
 * [X] *mistake*
-* [ ] shellshock
+* [X] *shellshock*
 * [X] coin1
-* [ ] blackjack
+* [X] *blackjack*
 * [X] *lotto*
 * [X] *cmd1*
 * [X] *cmd2*
