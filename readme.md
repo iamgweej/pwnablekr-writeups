@@ -32,7 +32,7 @@ Credit is also due to the awesome [Itay Saadia](https://github.com/itaysaadia "I
 
 ## Rookiss
 
-* [X] *brain fuck*
+* [X] *brainfuck*
 * [X] md5 calculator
 * [X] simple login
 * [X] *otp*
