@@ -32,7 +32,7 @@ Before doing more digging into getting another info leak, I noticed that the fir
 
 When I began looking for this gadget, it occured to me that I could just put it somewhere myself: the first `qword` of my initial name is put into `id`, a global variable, so I can just set it to the opcodes of `jmp edi`.
 
-That turned out to be a bit annoying, since the heap is fucking with me, so i'll jus try to get another info leak, this time for the pwnable.kr `libc`.
+That turned out to be a bit annoying, since the heap is fucking with me, so i'll just try to get another info leak, this time for the pwnable.kr `libc`.
 
 Returning to the stack-info-leak strategy, after a bit of digging, I found the info leak I wanted in `%10$llx`.
 
