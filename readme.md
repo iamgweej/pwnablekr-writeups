@@ -54,14 +54,14 @@ Credit is also due to the awesome [Itay Saadia](https://github.com/itaysaadia "I
 
 * [ ] proxy server
 * [ ] rootkit
-* [ ] dos4fun
+* [+] dos4fun
 * [ ] ascii
 * [ ] aeg
 * [ ] coin2
 * [ ] maze
 * [ ] wtf
 * [ ] sudoku
-* [ ] starcraft
+* [+] starcraft
 * [ ] cmd3
 * [ ] elf
 * [ ] lfh
